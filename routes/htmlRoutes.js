@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { builtinModules } = require('module');
 const path = require('path');
 
 router.get('/notes', (req, res) => {

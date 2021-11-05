@@ -1,20 +1,20 @@
 const router = require('express').Router();
 const { Router } = require('express');
 const fs = require('fs');
-const Save = require('../db/Save');
+const save = require('../db/Save');
 //gets all notes
 
-router.get('/notes', function(req,res) {
-    Save
+router.get('/notes', (req,res) => {
+    save
         .getNotes()
-        .then(notes => res.json(notes))
-        .catch(error => res.status(500).json(error));
+        .then(notes => {res.json(notes)})
+        .catch(error => { res.status(500).json(error)});
 
 });
  //read the db.json file and return all saved notes as JSON
 //get single note
 router.get('/notes/:id', function (req, res) {
-    Save    
+    save    
         .getNote(req.params.id)
         .then(note => res.json(note))
         .catch(error => res.status(500).json(error));
@@ -26,15 +26,16 @@ router.get('/notes/:id', function (req, res) {
 //add it to db.json file
 //find a way to give each note a unique ID
 router.post('/notes', (req, res) => {
-    Save
+    console.log(req.body)
+    save
         .addNote(req.body)
-        .then((note) => { res.json(note)})
-        .catch(error => res.status(500).json(error));
+        .then(note => { res.json(note)})
+        .catch(error => { res.status(500).json(error)});
 });
 
 //delete a note (bonus)
 router.delete('/notes/:id', function (req, res) {
-    Save    
+    save    
         .removeNote(req.params.id)
         .then(() => res.json({ ok: true }))
         .catch(error => res.status(500).json(error));
